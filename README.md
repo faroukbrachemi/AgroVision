@@ -1,4 +1,4 @@
-# RT-Streaming: UAV Agricultural Vision Streaming Platform
+# AgroVision: Real-Time Crop Health Monitoring System
 
 ## Project Structure
 
