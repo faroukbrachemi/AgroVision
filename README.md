@@ -11,7 +11,8 @@
 │   └── requirements.txt
 ├── frontend/          # React frontend for visualization
 │   ├── Dockerfile
-│   ├── package.json
+│   ├── package-lock.json
+|   ├── package.json
 │   ├── public/
 │   └── src/
 ├── uav-producer/      # UAV producer service (model inference, MinIO/Kafka upload)
