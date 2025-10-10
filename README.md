@@ -1,11 +1,11 @@
 # 🌾 AgroVision: Real-Time Crop Health Monitoring System
 
-AgroVision is an AI-driven system designed to monitor crop health in real time using aerial imagery and deep learning.
+**AgroVision** is an AI-driven system designed to monitor crop health in real time using aerial imagery and deep learning.
 It simulates UAV (Unmanned Aerial Vehicle) operations that capture agricultural field images, perform onboard inference, and stream results to a central FastAPI backend and React dashboard for visualization.
 
 The goal: enable farmers and researchers to detect early signs of crop stress, weeds, and anomalies, ensuring timely interventions and better yield outcomes.
 
-![System Dashboard](https://myoctocat.com/assets/images/base-octocat.svg)
+![System Dashboard](/Assets/AgroVision_Interface.png)
 
 ## System Architecture
 
