@@ -1,4 +1,23 @@
-# AgroVision: Real-Time Crop Health Monitoring System
+# 🌾 AgroVision: Real-Time Crop Health Monitoring System
+
+AgroVision is an AI-driven system designed to monitor crop health in real time using aerial imagery and deep learning.
+It simulates UAV (Unmanned Aerial Vehicle) operations that capture agricultural field images, perform onboard inference, and stream results to a central FastAPI backend and React dashboard for visualization.
+
+The goal: enable farmers and researchers to detect early signs of crop stress, weeds, and anomalies, ensuring timely interventions and better yield outcomes.
+
+![System Dashboard](https://myoctocat.com/assets/images/base-octocat.svg)
+
+## System Architecture
+
+The system processes high-resolution imagery from unmanned aerial vehicles (UAVs) equipped with multispectral cameras capturing both RGB and near-infrared (NIR) data. Apache Kafka streams this raw data in real time, simulating multiple UAVs as producers sending images to a single consumer. Raw images, which can reach 200 MB, are downsized to approximately 10 MB for efficiency. Historical data is stored in MongoDB, while processed images are saved in a MinIO bucket-style storage system.
+
+> The system outputs three types of prepared images:
+
+- RGB images for visual inspection
+- NDVI (Normalized Difference Vegetation Index) images to assess crop health
+- Prediction masks overlaid on RGB images, highlighting stress types (e.g., nutrient deficiency, drydown, or water stress)
+
+![System Architecture](https://myoctocat.com/assets/images/base-octocat.svg)
 
 ## Project Structure
 
@@ -37,12 +56,35 @@
 
 ---
 
-## Dataset
-
-You can access the datasets through the following link:  
+## Dataset & Preprocessingn
+The system uses the Agriculture-Vision 2021 dataset:
 🔗 [https://www.agriculture-vision.com/agriculture-vision-2021/dataset-2021](https://www.agriculture-vision.com/agriculture-vision-2021/dataset-2021)
 
----
+The focus was on crop health, selecting five key stress classes: nutrient deficiency, drydown, water, planter skip, and weed cluster. Remaining classes (double plant, endrow, storm damage, waterway) were grouped into a sixth “none-selected” class for non-health-related conditions. All images and corresponding masks were resized to 256×256 pixels, with roughly 5,824 samples distributed evenly across the six classes to ensure balance.
+
+The dataset was split into training (75%), validation (5%), and test (20%) subsets, maintaining class balance:
+
+- **Training**: 4,369 samples
+
+- **Validation**: 291 samples
+
+- **Test**: 1,164 samples
+
+This preparation ensures the model focuses on classes directly impacting crop health.
+
+## ML Model Design
+
+The model used is a dual-output U-Net architecture optimized for both efficiency and accuracy. The model takes 256×256 NDVI (Normalized Difference Vegetation Index) images as input, enhancing its ability to detect vegetation stress. It produces two simultaneous outputs:
+
+- Segmentation masks for pixel-level identification of affected areas
+
+- Multiclass predictions for categorizing stress types
+
+![Model Design](https://myoctocat.com/assets/images/base-octocat.svg)
+
+The model achieved 95% accuracy and a 70% Dice Coefficient, with performance evaluated using a confusion matrix to assess class-wise prediction reliability.
+
+![Confusion Matrix](https://myoctocat.com/assets/images/base-octocat.svg)
 
 ## Quick Start Guide
 
